@@ -1,0 +1,35 @@
+import requests
+import tkinter as tk
+from tkinter import ttk
+
+def get_joke():
+    response = requests.get("https://api.chucknorris.io/jokes/random")
+    joke_data = response.json()
+    joke = joke_data["value"]
+    return joke
+
+def display_joke():
+    joke = get_joke()
+    joke_label.configure(text=joke)
+
+# Membuat jendela utama
+window = tk.Tk()
+window.title("Chuck Norris Jokes")
+window.geometry("400x300")
+
+# Membuat tabel dengan label untuk menampilkan lelucon
+table_frame = ttk.Frame(window)
+table_frame.pack(pady=20)
+
+joke_label = ttk.Label(table_frame, font=("Arial", 14))
+joke_label.grid(row=0, column=0, padx=10)
+
+# Tombol untuk memuat lelucon baru
+button_frame = ttk.Frame(window)
+button_frame.pack(pady=10)
+
+load_button = ttk.Button(button_frame, text="Muat Lelucon", command=display_joke)
+load_button.pack()
+
+# Menampilkan jendela GUI
+window.mainloop()
